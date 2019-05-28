@@ -1,12 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
+import { createMuiTheme } from '@material-ui/core/styles'
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import Header from './common/Header';
+import Home from './home'
 
-function App() {
-  return (
-    <div className="App">
-      <h1>Teste</h1>
-    </div>
-  );
+
+const theme = createMuiTheme({
+  palette: {
+    primary:{
+      main: '#e91e63'
+    },
+    secondary: {
+      main:'#00b0ff',
+    },
+  },
+});
+
+class App extends Component {
+  render(){
+    return (
+      <MuiThemeProvider theme={theme}>
+        <Header />
+        <Home />
+      </MuiThemeProvider>
+    );
+  }
 }
 
 export default App;
