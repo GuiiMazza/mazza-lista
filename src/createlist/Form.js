@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import { InputAdornment } from '@material-ui/core';
@@ -7,39 +7,59 @@ import Button from '@material-ui/core/Button';
 
 const units = ['kg', 'lt', 'un'];
 
-const Form = () => (
-  <form className="form-container">
+class Form extends Component {
+
+  state = {
+    list: "",
+    product: "",
+    quantity: "",
+    unit: "",
+    price: "",
+  };
+
+  handleChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value })
+  }
+
+  handleSubmit = (  ) => {
+    const { list, product, quantity, unit, price} =  this.state
+    this.props.addProduct({ product, quantity, unit, price }, list);
+  }
+
+  render() {
+    return (
+      <form className="form-container">
       <div className="form-row">
       <TextField 
         label="Lista"
-        name="List"
-        value={''}
-        onChange={() => {}}
+        name="list"
+        value={this.state.list}
+        onChange={this.handleChange}
         required
       />
-      <Button variant="outlined" color="secondary">Adicionar</Button>
+      <Button variant="outlined" onClick={this.handleSubmit} color="secondary">Adicionar</Button>
       </div>
       <div className="form-row">
       <TextField 
         label="Produto"
         name="product"
-        value={''}
-        onChange={() => {}}
+        value={this.state.product}
+        onChange={this.handleChange}
         required
       />
       <TextField 
         label="Quantidade"
         name="quantity"
-        value={''}
-        onChange={() => {}}
+        value={this.state.quantity}
+        onChange={this.handleChange}
         required
       />
       <TextField
         select 
         label="Unidade"
-        name="unity"
-        value={''}
-        onChange={() => {}}
+        name="unit"
+        value={this.state.unit}
+        onChange={this.handleChange}
         required
       >
         {units.map(option => (
@@ -49,15 +69,17 @@ const Form = () => (
       <TextField 
         label="Preço"
         name="price"
-        value={''}
-        onChange={() => {}}
+        value={this.state.price}
+        onChange={this.handleChange}
         InputProps={{
           startAdornment: <InputAdornment position="start">R$</InputAdornment>
         }}
       />
       </div>
     </form>
-);
+    )
+  }
+}
 
 
 export default Form;
