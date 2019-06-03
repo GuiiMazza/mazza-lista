@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
-const ListFooter = () => (
+const ListFooter = (props) => (
   <div className="list-footer">
     <p>31/01/1996</p>
-    <p>100.00</p>
+    <p>{props.total}</p>
   </div>
 );
 

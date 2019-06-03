@@ -5,7 +5,7 @@ import { InputAdornment } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 
 
-const units = ['kg', 'lt', 'un'];
+const units = ['Kilos', 'Litros', 'Unidades'];
 
 class Form extends Component {
 
@@ -15,6 +15,7 @@ class Form extends Component {
     quantity: "",
     unit: "",
     price: "",
+    showErros: false,
   };
 
   handleChange = (event) => {
@@ -22,8 +23,20 @@ class Form extends Component {
   }
 
   handleSubmit = (  ) => {
-    const { list, product, quantity, unit, price} =  this.state
-    this.props.addProduct({ product, quantity, unit, price }, list);
+    const { list, product, quantity, unit, price } =  this.state
+    if( !list || !product || !quantity || !unit ) {
+      this.setState({ showErros: true });
+    } else {
+      this.props.addProduct({ product, quantity, unit, price }, list);
+      this.setState({
+        product: "",
+        quantity: "",
+        unit: "",
+        price: "",
+        showErros: false,
+      });
+    }
+    
   }
 
   render() {
@@ -36,6 +49,7 @@ class Form extends Component {
         value={this.state.list}
         onChange={this.handleChange}
         required
+        error={!this.state.list && this.state.showErros}
       />
       <Button variant="outlined" onClick={this.handleSubmit} color="secondary">Adicionar</Button>
       </div>
@@ -46,6 +60,7 @@ class Form extends Component {
         value={this.state.product}
         onChange={this.handleChange}
         required
+        error={!this.state.product && this.state.showErros}
       />
       <TextField 
         label="Quantidade"
@@ -53,6 +68,7 @@ class Form extends Component {
         value={this.state.quantity}
         onChange={this.handleChange}
         required
+        error={!this.state.quantity && this.state.showErros}
       />
       <TextField
         select 
@@ -61,6 +77,7 @@ class Form extends Component {
         value={this.state.unit}
         onChange={this.handleChange}
         required
+        error={!this.state.unit && this.state.showErros}
       >
         {units.map(option => (
           <MenuItem key={option} value={option}>{option}</MenuItem>

@@ -5,7 +5,7 @@ import ListItem from './ListItem'
 import { connect } from 'react-redux'
 import { Creators as ListAction} from '../store/actions/list'
 import { bindActionCreators } from 'redux'
-import { dispatch } from 'rxjs/internal/observable/range';
+
 
 class CreateList extends Component {
 
@@ -17,7 +17,8 @@ class CreateList extends Component {
       <div className="page-container">
       <Form addProduct={this.addProduct}/>
         <div className="list-item-container">
-          <ListItem />
+          {this.props.list.items.map(item => 
+            <ListItem item={item} key={item.id} deleteProduct={this.props.deleteProduct} toggleProduct={this.props.toggleProduct} />) }
         </div>
     </div>
     )
